@@ -1,16 +1,6 @@
-name: EKS Terraform Deployment
+name: EKS Destroy Deployment
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'cognito/**'
-
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'cognito/**'
+  workflow_dispatch:
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -18,37 +8,9 @@ env:
   AWS_DEFAULT_REGION: us-east-1
 
 jobs:
-  changes:
-    name: Find Changes
-    runs-on: ubuntu-latest
-    outputs:
-      names: ${{ steps.filter.outputs.changes }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Find Changes
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            cognito:
-              - 'cognito/**'
-
   terraform:
-    needs: changes
     runs-on: ubuntu-latest
-    name: ${{ matrix.name }} - ${{ matrix.environment }}
-    if: ${{ fromJSON(needs.changes.outputs.names) != '[]' }}
-    strategy:
-      max-parallel: 1
-      matrix:
-        name: ${{ fromJSON(needs.changes.outputs.names) }}
-        environment: [dev]
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ matrix.name }}
+    name: test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -67,16 +29,11 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          pwd
-          ls -lR 
-          terraform init -backend-config=${{ matrix.environment }}/backend.tfvars
+          
+          cd cognito
+          terraform init -backend-config=dev/backend.tfvars
+          terraform destroy --var-file=dev/terraform.tfvars --auto-approve=true
 
-      - name: Validate Terraform
-        run: terraform validate
 
-      - name: Terraform Plan
-        run: terraform plan -var-file=${{ matrix.environment }}/terraform.tfvars
 
-      - name: Execute Terraform Action
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -var-file=${{ matrix.environment }}/terraform.tfvars
+
