@@ -24,7 +24,7 @@ resource "aws_cognito_user_pool" "this" {
 
 resource "aws_cognito_user_pool_client" "this" {
   name            = "${var.user_pool_name}_client"
-  user_pool_id    = aws_cognito_user_pool.bmb_user_pool.id
+  user_pool_id    = aws_cognito_user_pool.this.id
   generate_secret = true
   supported_identity_providers = compact([
     "COGNITO",
@@ -36,7 +36,7 @@ resource "aws_cognito_user_pool_client" "this" {
   explicit_auth_flows                  = ["ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
 }
 
-resource "aws_cognito_identity_pool" "bmb_identity_pool" {
+resource "aws_cognito_identity_pool" "this" {
   identity_pool_name               = "${var.user_pool_name}_identity"
   allow_unauthenticated_identities = false
   cognito_identity_providers {
@@ -48,5 +48,57 @@ resource "aws_cognito_identity_pool" "bmb_identity_pool" {
   tags = {
     Terraform = "true"
     TCManaged = "true"
+  }
+}
+
+resource "aws_cognito_identity_pool_provider_principal_tag" "this" {
+  identity_pool_id       = aws_cognito_identity_pool.this.id
+  identity_provider_name = aws_cognito_user_pool.this.endpoint
+  use_defaults           = false
+  principal_tags = {
+    test = "value"
+  }
+}
+
+resource "aws_cognito_user_pool_domain" "this" {
+  domain       = var.user_pool_name
+  user_pool_id = aws_cognito_user_pool.this.id
+}
+
+resource "aws_cognito_user_group" "admin" {
+  name         = "admin"
+  user_pool_id = aws_cognito_user_pool.this.id
+  description  = "Administrator"
+}
+
+resource "aws_cognito_user_group" "customer" {
+  name         = "customer"
+  user_pool_id = aws_cognito_user_pool.this.id
+  description  = "Customers"
+}
+
+resource "aws_cognito_user" "admin_user" {
+  username       = "admin@emodulo.com.br"
+  user_pool_id   = aws_cognito_user_pool.this.id
+  message_action = "SUPPRESS"
+  password       = "TempPass123!"
+
+  attributes = {
+    name           = "Admin"
+    email          = "admin@emodulo.com.br"
+    email_verified = true
+  }
+}
+
+resource "aws_cognito_user" "customer_user" {
+  username       = "customer@emodulo.com.br"
+  user_pool_id   = aws_cognito_user_pool.this.id
+  message_action = "SUPPRESS"
+  password       = "TempPass123!"
+
+  attributes = {
+    name           = "Customer"
+    email          = "customer@emodulo.com.br"
+    email_verified = true
   }
 }
