@@ -50,7 +50,6 @@ resource "aws_cognito_user_pool_domain" "this" {
 }
 
 resource "aws_cognito_user" "customer_user" {
-  username       = "customer@emodulo.com.br"
   user_pool_id   = aws_cognito_user_pool.this.id
   message_action = "SUPPRESS"
   password       = "TempPass123!"

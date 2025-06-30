@@ -1,6 +1,12 @@
 name: EKS Destroy Deployment
+
 on:
   workflow_dispatch:
+    inputs:
+      confirm:
+        description: "Tem certeza que deseja destruir a infraestrutura? Digite: sim"
+        required: true
+        default: "não"
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -9,11 +15,12 @@ env:
 
 jobs:
   terraform:
+    if: github.event.inputs.confirm == 'sim'
     runs-on: ubuntu-latest
-    name: test
+    name: Terraform Destroy
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -27,26 +34,12 @@ jobs:
         with:
           terraform_wrapper: true
 
-      - name: Initialize Terraform
+      - name: Destroy All Modules
         run: |
-          
-          cd cognito
-          terraform init -backend-config=prd/backend.tfvars
-          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
-          cd ..
-          cd eks
-          terraform init -backend-config=prd/backend.tfvars
-          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
-          cd ..
-          cd acm
-          terraform init -backend-config=prd/backend.tfvars
-          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
-          cd ..
-          cd vpc
-          terraform init -backend-config=prd/backend.tfvars
-          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
-          
-
-
-
-
+          for dir in cognito eks acm vpc; do
+            echo "Destruindo módulo: $dir"
+            cd $dir
+            terraform init -backend-config=prd/backend.tfvars
+            terraform destroy --var-file=prd/terraform.tfvars --auto-approve
+            cd ..
+          done
