@@ -1,4 +1,4 @@
-name: EKS Destroy Deployment
+name: Destroy AWS
 on:
   workflow_dispatch:
     inputs:
