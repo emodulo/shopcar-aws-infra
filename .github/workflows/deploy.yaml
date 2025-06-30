@@ -31,13 +31,13 @@ jobs:
         with:
           filters: |
             cognito:
-              - 'cognito/**'
+              - "cognito/**"
             vpc:
-              - 'vpc/**'
+              - "vpc/**"
             acm:
-              - 'acm/**'
+              - "acm/**'
             eks:
-              - 'eks/**'
+              - "eks/**"
 
   terraform:
     needs: changes
