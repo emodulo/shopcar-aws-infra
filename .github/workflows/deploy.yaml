@@ -5,10 +5,10 @@ on:
     branches:
       - main
     paths:
-      - "cognito/**"
-      - "vpc/**"
-      - "acm/**"
-      - "eks/**"
+      - 'cognito/**'
+      - 'vpc/**'
+      - 'acm/**'
+      - 'eks/**'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -23,7 +23,7 @@ jobs:
       names: ${{ steps.filter.outputs.changes }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Find Changes
         uses: dorny/paths-filter@v2
@@ -31,13 +31,13 @@ jobs:
         with:
           filters: |
             cognito:
-              - "cognito/**"
+              - 'cognito/**'
             vpc:
-              - "vpc/**"
+              - 'vpc/**'
             acm:
-              - "acm/**"
+              - 'acm/**'
             eks:
-              - "eks/**"
+              - 'eks/**'
 
   terraform:
     needs: changes
@@ -55,7 +55,7 @@ jobs:
         working-directory: ${{ matrix.name }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
