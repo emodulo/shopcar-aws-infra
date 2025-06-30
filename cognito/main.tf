@@ -2,13 +2,7 @@ resource "aws_cognito_user_pool" "this" {
   name                     = var.user_pool_name
   auto_verified_attributes = ["email"]
 
-  schema {
-    attribute_data_type      = "String"
-    developer_only_attribute = false
-    mutable                  = false
-    name                     = "name"
-    required                 = true
-  }
+
   schema {
     attribute_data_type      = "String"
     developer_only_attribute = false
@@ -33,7 +27,7 @@ resource "aws_cognito_user_pool_client" "this" {
   allowed_oauth_flows_user_pool_client = true
   allowed_oauth_flows                  = ["code", "implicit"]
   allowed_oauth_scopes                 = ["email", "openid"]
-  explicit_auth_flows                  = ["ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
+  explicit_auth_flows                  = ["ALLOW_USER_AUTH", ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
 }
 
 resource "aws_cognito_identity_pool" "this" {
@@ -47,7 +41,6 @@ resource "aws_cognito_identity_pool" "this" {
 
   tags = {
     Terraform = "true"
-    TCManaged = "true"
   }
 }
 

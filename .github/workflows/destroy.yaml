@@ -31,8 +31,17 @@ jobs:
         run: |
           
           cd cognito
-          terraform init -backend-config=dev/backend.tfvars
-          terraform destroy --var-file=dev/terraform.tfvars --auto-approve=true
+          terraform init -backend-config=prd/backend.tfvars
+          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
+          cd ..
+          cd eks
+          terraform init -backend-config=prd/backend.tfvars
+          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
+          cd ..
+          cd vpc
+          terraform init -backend-config=prd/backend.tfvars
+          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
+          
 
 
 
