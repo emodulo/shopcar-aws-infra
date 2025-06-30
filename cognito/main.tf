@@ -41,7 +41,6 @@ resource "aws_cognito_identity_pool" "this" {
 
   tags = {
     Terraform = "true"
-    TCManaged = "true"
   }
 }
 

@@ -3,7 +3,7 @@ variable "environment" {
 }
 
 variable "project" {
-    default = "eks"
+    default = "shopcar"
 
 }
 

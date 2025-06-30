@@ -5,13 +5,8 @@ on:
       - main
     paths:
       - 'cognito/**'
-
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'cognito/**'
-
+      - 'vpc/**'
+      - 'eks/**'
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -44,7 +39,7 @@ jobs:
       max-parallel: 1
       matrix:
         name: ${{ fromJSON(needs.changes.outputs.names) }}
-        environment: [dev]
+        environment: [prd]
     defaults:
       run:
         shell: bash
