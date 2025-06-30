@@ -1,15 +1,6 @@
 resource "aws_cognito_user_pool" "this" {
   name                     = var.user_pool_name
-  auto_verified_attributes = ["email"]
 
-
-  schema {
-    attribute_data_type      = "String"
-    developer_only_attribute = false
-    mutable                  = false
-    name                     = "email"
-    required                 = true
-  }
   tags = {
     Terraform = "true"
   }
@@ -65,6 +56,7 @@ resource "aws_cognito_user" "customer_user" {
   password       = "TempPass123!"
 
   attributes = {
+    email          = "customer@emodulo.com.br"
     email_verified = true
   }
 }
