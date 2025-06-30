@@ -14,6 +14,8 @@ module "eks" {
     vpc-cni                = {}
   }
 
+  # trigger redeploy 2
+
   # Optional
   cluster_endpoint_public_access = true
 
