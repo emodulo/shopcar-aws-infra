@@ -60,4 +60,3 @@ resource "aws_cognito_user" "customer_user" {
     email_verified = true
   }
 }
-
