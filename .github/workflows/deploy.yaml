@@ -1,4 +1,5 @@
 name: EKS Terraform Deployment
+
 on:
   push:
     branches:
@@ -6,7 +7,9 @@ on:
     paths:
       - 'cognito/**'
       - 'vpc/**'
+      - 'acm/**'
       - 'eks/**'
+
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -20,7 +23,7 @@ jobs:
       names: ${{ steps.filter.outputs.changes }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Find Changes
         uses: dorny/paths-filter@v2
@@ -52,7 +55,7 @@ jobs:
         working-directory: ${{ matrix.name }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -66,18 +69,22 @@ jobs:
         with:
           terraform_wrapper: true
 
-      - name: Initialize Terraform
-        run: |
-          pwd
-          ls -lR 
-          terraform init -backend-config=${{ matrix.environment }}/backend.tfvars
+      - name: Terraform Format Check
+        run: terraform fmt -check
 
-      - name: Validate Terraform
+      - name: Terraform Init
+        run: terraform init -backend-config=envs/${{ matrix.environment }}/backend.tfvars
+
+      - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var-file=${{ matrix.environment }}/terraform.tfvars
+        run: terraform plan -var-file=envs/${{ matrix.environment }}/terraform.tfvars
 
-      - name: Execute Terraform Action
+      - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -var-file=${{ matrix.environment }}/terraform.tfvars
+        run: terraform apply -auto-approve -var-file=envs/${{ matrix.environment }}/terraform.tfvars
+
+      - name: Terraform Output
+        if: github.ref == 'refs/heads/main'
+        run: terraform output
