@@ -85,7 +85,8 @@ resource "aws_iam_policy" "alb_controller_policy" {
       {
         "Effect" : "Allow",
         "Action" : [
-          "ec2:CreateSecurityGroup"
+          "ec2:CreateSecurityGroup",
+          "ec2:DescribeRouteTables"
         ],
         "Resource" : "*"
       },
