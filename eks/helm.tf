@@ -43,3 +43,4 @@ resource "helm_release" "aws_load_balancer_controller" {
     value = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${aws_iam_role.eks-alb-ingress-controller.name}"
   }
 }
+

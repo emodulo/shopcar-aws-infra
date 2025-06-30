@@ -60,3 +60,6 @@ resource "aws_eks_access_policy_association" "example" {
     type = "cluster"
   }
 }
+
+
+
