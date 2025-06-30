@@ -12,7 +12,7 @@ provider "helm" {
 
 # Install the AWS Load Balancer Controller via Helm
 resource "helm_release" "aws_load_balancer_controller" {
-  depends_on = [module.eks_managed_node_group, aws_iam_role.eks-alb-ingress-controller, aws_iam_policy.alb_controller_policy, aws_iam_policy.eks_assume_role_policy]
+  depends_on = [aws_iam_role.eks-alb-ingress-controller, kubernetes_service_account.aws_lb_controller]
   name       = "aws-load-balancer-controller"
   namespace  = "kube-system"
   chart      = "aws-load-balancer-controller"
