@@ -25,7 +25,7 @@ resource "helm_release" "aws_load_balancer_controller" {
 
   set {
     name  = "region"
-    value = "us-east-1"
+    value = "us-east-2"
   }
 
   set {

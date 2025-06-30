@@ -40,13 +40,13 @@ variable "vpc" {
       {
         name                    = "shopcar-vpc-public-subnet-1a"
         cidr_block              = "10.0.0.0/26"
-        availability_zone       = "us-east-1a"
+        availability_zone       = "us-east-2a"
         map_public_ip_on_launch = true
       },
       {
         name                    = "shopcar-vpc-public-subnet-1c"
         cidr_block              = "10.0.0.64/26"
-        availability_zone       = "us-east-1c"
+        availability_zone       = "us-east-2c"
         map_public_ip_on_launch = true
       }
     ]
@@ -54,13 +54,13 @@ variable "vpc" {
       {
         name                    = "shopcar-vpc-private-subnet-1a"
         cidr_block              = "10.0.0.128/26"
-        availability_zone       = "us-east-1a"
+        availability_zone       = "us-east-2a"
         map_public_ip_on_launch = false
       },
       {
         name                    = "shopcar-vpc-private-subnet-1c"
         cidr_block              = "10.0.0.192/26"
-        availability_zone       = "us-east-1c"
+        availability_zone       = "us-east-2c"
         map_public_ip_on_launch = false
       }
     ]
