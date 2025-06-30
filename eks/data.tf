@@ -27,3 +27,11 @@ data "aws_subnet" "private" {
   for_each = toset(data.aws_subnets.private_subnets.ids)
   id       = each.value
 }
+
+data "aws_eks_cluster" "cluster" {
+  name = module.eks.cluster_name
+}
+
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.eks.cluster_name
+}
