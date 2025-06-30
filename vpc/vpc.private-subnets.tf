@@ -7,6 +7,6 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = var.vpc.private_subnets[count.index].map_public_ip_on_launch
 
   tags = {
-    Name                     = var.vpc.private_subnets[count.index].name
+    Name = var.vpc.private_subnets[count.index].name
   }
 }
