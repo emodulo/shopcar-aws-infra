@@ -38,6 +38,10 @@ jobs:
           terraform init -backend-config=prd/backend.tfvars
           terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
           cd ..
+          cd acm
+          terraform init -backend-config=prd/backend.tfvars
+          terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true
+          cd ..
           cd vpc
           terraform init -backend-config=prd/backend.tfvars
           terraform destroy --var-file=prd/terraform.tfvars --auto-approve=true

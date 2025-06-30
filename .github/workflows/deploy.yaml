@@ -29,6 +29,12 @@ jobs:
           filters: |
             cognito:
               - 'cognito/**'
+            vpc:
+              - 'vpc/**'
+            acm:
+              - 'acm/**'
+            eks:
+              - 'eks/**'
 
   terraform:
     needs: changes

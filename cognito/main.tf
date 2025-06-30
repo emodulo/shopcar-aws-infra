@@ -58,31 +58,6 @@ resource "aws_cognito_user_pool_domain" "this" {
   user_pool_id = aws_cognito_user_pool.this.id
 }
 
-resource "aws_cognito_user_group" "admin" {
-  name         = "admin"
-  user_pool_id = aws_cognito_user_pool.this.id
-  description  = "Administrator"
-}
-
-resource "aws_cognito_user_group" "customer" {
-  name         = "customer"
-  user_pool_id = aws_cognito_user_pool.this.id
-  description  = "Customers"
-}
-
-resource "aws_cognito_user" "admin_user" {
-  username       = "admin@emodulo.com.br"
-  user_pool_id   = aws_cognito_user_pool.this.id
-  message_action = "SUPPRESS"
-  password       = "TempPass123!"
-
-  attributes = {
-    name           = "Admin"
-    email          = "admin@emodulo.com.br"
-    email_verified = true
-  }
-}
-
 resource "aws_cognito_user" "customer_user" {
   username       = "customer@emodulo.com.br"
   user_pool_id   = aws_cognito_user_pool.this.id
@@ -90,8 +65,6 @@ resource "aws_cognito_user" "customer_user" {
   password       = "TempPass123!"
 
   attributes = {
-    name           = "Customer"
-    email          = "customer@emodulo.com.br"
     email_verified = true
   }
 }
