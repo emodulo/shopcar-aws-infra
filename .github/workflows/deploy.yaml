@@ -1,11 +1,11 @@
 name: Deploy AWS
 on:
-  workflow_dispatch:
-    inputs:
-      confirm:
-        description: "Tem certeza que deseja construir a infraestrutura? Digite: sim"
-        required: true
-        default: "não"
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+      - '!README.md'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
