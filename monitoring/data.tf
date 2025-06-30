@@ -9,8 +9,8 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 data "aws_acm_certificate" "acm" {
-  domain = var.domain_name
-  types  = ["AMAZON_ISSUED"]
+  domain      = var.domain_name
+  types       = ["AMAZON_ISSUED"]
   most_recent = true
 }
 
@@ -35,5 +35,5 @@ data "aws_subnets" "public_subnets" {
 
 data "aws_subnet" "public" {
   for_each = toset(data.aws_subnets.public_subnets.ids)
-  id = each.value
+  id       = each.value
 }

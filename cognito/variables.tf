@@ -3,6 +3,6 @@ variable "environment" {
 }
 
 variable "user_pool_name" {
-    default = "shopcar-auth"
+  default = "shopcar-auth"
 
 }
