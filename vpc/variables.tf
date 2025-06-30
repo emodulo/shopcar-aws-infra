@@ -30,7 +30,7 @@ variable "vpc" {
   })
 
   default = {
-    name                     = "shopcar-vpc"
+    name                     = "shopcar-prd"
     cidr_block               = "10.0.0.0/24"
     internet_gateway_name    = "shopcar-internet-gateway"
     nat_gateway_name         = "shopcar-nat-gateway"
