@@ -35,7 +35,7 @@ jobs:
 
       - name: Destroy All Modules
         run: |
-          for dir in cognito eks acm vpc; do
+          for dir in cognito eks vpc; do
             echo "Destruindo módulo: $dir"
             cd $dir
             terraform init -backend-config=prd/backend.tfvars

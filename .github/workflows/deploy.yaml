@@ -31,8 +31,6 @@ jobs:
               - 'cognito/**'
             vpc:
               - 'vpc/**'
-            acm:
-              - 'acm/**'
             eks:
               - 'eks/**'
 
