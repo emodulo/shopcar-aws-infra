@@ -1,5 +1,5 @@
 resource "aws_cognito_user_pool" "this" {
-  name                     = var.user_pool_name
+  name = var.user_pool_name
 
   tags = {
     Terraform = "true"

@@ -1,2 +1,2 @@
-environment = "prd"
-instance_type ="t3.large"
+environment   = "prd"
+instance_type = "t3.large"

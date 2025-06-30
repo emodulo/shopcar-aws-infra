@@ -3,21 +3,21 @@ variable "environment" {
 }
 
 variable "project" {
-    default = "shopcar"
+  default = "shopcar"
 
 }
 
-variable "SOURCE_GMAIL_ID"{
+variable "SOURCE_GMAIL_ID" {
   description = "Source GMAIl Id"
-  default = "emodulo@gmail.com"
+  default     = "emodulo@gmail.com"
 }
-variable "SOURCE_AUTH_PASSWORD"{
+variable "SOURCE_AUTH_PASSWORD" {
   description = "Source Auth Password"
-  default ="gerarpassword"
+  default     = "gerarpassword"
 }
-variable "DESTINATION_GMAIL_ID"{
+variable "DESTINATION_GMAIL_ID" {
   description = ""
-  default ="kj.juniorzinho@gmail.com"
+  default     = "kj.juniorzinho@gmail.com"
 }
 
 variable "domain_name" {

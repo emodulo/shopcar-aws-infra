@@ -3,9 +3,9 @@ variable "environment" {
 }
 
 variable "project" {
-    default = "shopcar"
+  default = "shopcar"
 
 }
-variable "instance_type"{
+variable "instance_type" {
   default = ""
 }

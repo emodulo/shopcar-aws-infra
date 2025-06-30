@@ -3,6 +3,6 @@ variable "environment" {
 }
 
 variable "project" {
-    default = "shopcar"
+  default = "shopcar"
 
 }

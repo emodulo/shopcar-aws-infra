@@ -2,20 +2,20 @@ resource "aws_iam_group" "admin_group" {
   name = "${var.project}-admin-group-${var.environment}"
 }
 resource "aws_iam_role" "admin_role" {
-    name = "${var.project}-admin-${var.environment}"
-    assume_role_policy = jsonencode({
-        Version = "2012-10-17",
-        Statement = [
-            {
-                Effect = "Allow",
-                Principal = {
-                      "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id
-}:root"
-                },
-                Action = "sts:AssumeRole"
-            }
-        ]
-    })
+  name = "${var.project}-admin-${var.environment}"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          "AWS" : "arn:aws:iam::${data.aws_caller_identity.current.account_id
+          }:root"
+        },
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "admin_permissions" {
@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "admin_permissions" {
 resource "aws_iam_policy" "eks_assume_role_policy" {
   name        = "${var.project}-assume-role-policy-${var.environment}"
   description = "Allows users in the group to assume the eks-admins-role"
-  policy      = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -46,9 +46,9 @@ resource "aws_iam_group_policy_attachment" "attach_assume_role_policy" {
 
 
 resource "aws_eks_access_entry" "example" {
-  cluster_name      = module.eks.cluster_name
-  principal_arn     = aws_iam_role.admin_role.arn
-  type              = "STANDARD"
+  cluster_name  = module.eks.cluster_name
+  principal_arn = aws_iam_role.admin_role.arn
+  type          = "STANDARD"
 }
 
 
@@ -57,6 +57,6 @@ resource "aws_eks_access_policy_association" "example" {
   policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = aws_iam_role.admin_role.arn
   access_scope {
-    type       = "cluster"
+    type = "cluster"
   }
 }
