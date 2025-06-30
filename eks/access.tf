@@ -22,6 +22,11 @@ resource "aws_iam_role_policy_attachment" "admin_permissions" {
   role       = aws_iam_role.admin_role.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
+resource "aws_iam_role_policy_attachment" "alb_controller_attach" {
+  role       = aws_iam_role.eks-alb-ingress-controller.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSLoadBalancerControllerIAMPolicy"
+}
+
 # Create IAM Policy for AssumeRole
 resource "aws_iam_policy" "eks_assume_role_policy" {
   name        = "${var.project}-assume-role-policy-${var.environment}"
