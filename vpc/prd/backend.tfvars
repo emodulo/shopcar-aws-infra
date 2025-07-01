@@ -1,3 +1,3 @@
-region = "us-east-2"
-bucket = "shopcar-s3-terraform"
+region = "us-west-1"
+bucket = "shopcar-s3"
 key    = "shopcar/prd/vpc.tfstate"
